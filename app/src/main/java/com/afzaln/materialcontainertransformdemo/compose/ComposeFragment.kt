@@ -1,11 +1,10 @@
 package com.afzaln.materialcontainertransformdemo.compose
 
-import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.afzaln.materialcontainertransformdemo.applySystemWindowInsetsPadding
 import com.afzaln.materialcontainertransformdemo.databinding.FragmentComposeBinding
@@ -53,6 +52,10 @@ class ComposeFragment : Fragment() {
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
             fadeMode = FADE_MODE_CROSS
+            // fadeProgressThresholds = MaterialContainerTransform.ProgressThresholds(0.75f, 1f)
+            // scaleMaskProgressThresholds = MaterialContainerTransform.ProgressThresholds(0.25f, 1f)
+            // scaleProgressThresholds = MaterialContainerTransform.ProgressThresholds(0.75f, 1f)
+            // shapeMaskProgressThresholds = MaterialContainerTransform.ProgressThresholds(0f, 1f)
             setAllContainerColors(requireContext().themeColor(com.google.android.material.R.attr.colorSurface))
         }
     }
