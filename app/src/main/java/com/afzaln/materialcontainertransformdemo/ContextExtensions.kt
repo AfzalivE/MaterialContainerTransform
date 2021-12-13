@@ -21,6 +21,9 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowInsets
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
 import androidx.annotation.AttrRes
@@ -29,6 +32,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.res.use
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 
 /**
  * Retrieve a color from the current [android.content.res.Resources.Theme].
@@ -45,26 +51,90 @@ fun Context.themeColor(
     }
 }
 
-/**
- * Retrieve a style from the current [android.content.res.Resources.Theme].
- */
-@StyleRes
-fun Context.themeStyle(@AttrRes attr: Int): Int {
-    val tv = TypedValue()
-    theme.resolveAttribute(attr, tv, true)
-    return tv.data
+fun View.applySystemWindowInsetsPadding(
+    previousApplyLeft: Boolean,
+    previousApplyTop: Boolean,
+    previousApplyRight: Boolean,
+    previousApplyBottom: Boolean,
+    applyLeft: Boolean,
+    applyTop: Boolean,
+    applyRight: Boolean,
+    applyBottom: Boolean
+) {
+    if (previousApplyLeft == applyLeft &&
+        previousApplyTop == applyTop &&
+        previousApplyRight == applyRight &&
+        previousApplyBottom == applyBottom
+    ) {
+        return
+    }
+
+    doOnApplyWindowInsets { view, insets, padding, _, _ ->
+        val bottomInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+        val left = if (applyLeft) insets.systemWindowInsetLeft else 0
+        val top = if (applyTop) insets.systemWindowInsetTop else 0
+        val right = if (applyRight) insets.systemWindowInsetRight else 0
+        val bottom = if (applyBottom) bottomInsets else 0
+
+        view.setPadding(
+            padding.left + left,
+            padding.top + top,
+            padding.right + right,
+            padding.bottom + bottom
+        )
+    }
 }
 
-@SuppressLint("Recycle")
-fun Context.themeInterpolator(@AttrRes attr: Int): Interpolator {
-    return AnimationUtils.loadInterpolator(
-        this,
-        obtainStyledAttributes(intArrayOf(attr)).use {
-            it.getResourceId(0, android.R.interpolator.fast_out_slow_in)
-        }
-    )
+fun View.doOnApplyWindowInsets(
+    block: (View, WindowInsetsCompat, InitialPadding, InitialMargin, Int) -> Unit
+) {
+    // Create a snapshot of the view's padding & margin states
+    val initialPadding = recordInitialPaddingForView(this)
+    val initialMargin = recordInitialMarginForView(this)
+    val initialHeight = recordInitialHeightForView(this)
+    // Set an actual OnApplyWindowInsetsListener which proxies to the given
+    // lambda, also passing in the original padding & margin states
+    ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+        block(v, insets, initialPadding, initialMargin, initialHeight)
+        // Always return the insets, so that children can also use them
+        insets
+    }
+    // request some insets
+    requestApplyInsetsWhenAttached()
 }
 
-fun Context.getDrawableOrNull(@DrawableRes id: Int?): Drawable? {
-    return if (id == null || id == 0) null else AppCompatResources.getDrawable(this, id)
+class InitialPadding(val left: Int, val top: Int, val right: Int, val bottom: Int)
+
+class InitialMargin(val left: Int, val top: Int, val right: Int, val bottom: Int)
+
+private fun recordInitialPaddingForView(view: View) = InitialPadding(
+    view.paddingLeft, view.paddingTop, view.paddingRight, view.paddingBottom
+)
+
+private fun recordInitialMarginForView(view: View): InitialMargin {
+    val lp = view.layoutParams as? ViewGroup.MarginLayoutParams
+        ?: throw IllegalArgumentException("Invalid view layout params")
+    return InitialMargin(lp.leftMargin, lp.topMargin, lp.rightMargin, lp.bottomMargin)
+}
+
+private fun recordInitialHeightForView(view: View): Int {
+    return view.layoutParams.height
+}
+
+fun View.requestApplyInsetsWhenAttached() {
+    if (isAttachedToWindow) {
+        // We're already attached, just request as normal
+        requestApplyInsets()
+    } else {
+        // We're not attached to the hierarchy, add a listener to
+        // request when we are
+        addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View) {
+                v.removeOnAttachStateChangeListener(this)
+                v.requestApplyInsets()
+            }
+
+            override fun onViewDetachedFromWindow(v: View) = Unit
+        })
+    }
 }

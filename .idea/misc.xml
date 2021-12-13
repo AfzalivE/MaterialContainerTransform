@@ -3,12 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../private/var/folders/gj/vpv48jtx2956m4g944w958ch0000gn/T/drawable-temp/fake_of_asl_edit_reply.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/avatar_none.xml" value="0.2055" />
+        <entry key="app/src/main/res/drawable/bottom_app_bar_title_foreground.xml" value="0.2055" />
+        <entry key="app/src/main/res/drawable/color_on_primary_surface_divider.xml" value="0.2055" />
+        <entry key="app/src/main/res/drawable/ic_circle.xml" value="0.2055" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2055" />
+        <entry key="app/src/main/res/drawable/ic_mic.xml" value="0.2055" />
+        <entry key="app/src/main/res/drawable/nav_divider_top.xml" value="0.2055" />
+        <entry key="app/src/main/res/font/work_sans.xml" value="0.23229166666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2269021739130435" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.2269021739130435" />
+        <entry key="app/src/main/res/layout/fragment_compose.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.2269021739130435" />
         <entry key="app/src/main/res/layout/fragment_first_nonshared.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.19375" />
-        <entry key="app/src/main/res/layout/item_row.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/item_row.xml" value="0.1" />
       </map>
     </option>
   </component>
