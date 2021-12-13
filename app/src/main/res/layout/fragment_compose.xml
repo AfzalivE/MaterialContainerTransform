@@ -4,8 +4,9 @@
     android:id="@+id/compose_constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionName="@string/compose_transition_name"
-    android:layout_marginTop="@dimen/grid_2">
+    android:layout_marginTop="@dimen/grid_2"
+    android:background="?attr/colorSurface"
+    android:transitionName="@string/compose_transition_name">
 
     <EditText
         android:id="@+id/subject_edit_text"

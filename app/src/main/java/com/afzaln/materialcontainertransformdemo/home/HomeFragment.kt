@@ -16,6 +16,8 @@ import com.afzaln.materialcontainertransformdemo.R
 import com.afzaln.materialcontainertransformdemo.applySystemWindowInsetsPadding
 import com.afzaln.materialcontainertransformdemo.databinding.FragmentHomeBinding
 import com.afzaln.materialcontainertransformdemo.doOnApplyWindowInsets
+import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.MaterialSharedAxis
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -54,6 +56,9 @@ class HomeFragment : Fragment() {
         )
 
         binding.fab.setOnClickListener {
+            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+
             findNavController().navigate(
                 R.id.action_FirstFragment_to_SecondFragment,
                 null,
