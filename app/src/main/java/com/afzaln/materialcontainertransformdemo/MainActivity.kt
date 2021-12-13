@@ -28,10 +28,6 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
-        // binding.mainFab.setOnClickListener {
-        //     findNavController(R.id.nav_host_fragment_content_main).navigate(SecondFragmentDirections.actionGlobalSecondFragment())
-        // }
     }
 
     override fun onSupportNavigateUp(): Boolean {

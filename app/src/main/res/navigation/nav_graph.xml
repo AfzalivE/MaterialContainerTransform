@@ -26,18 +26,4 @@
             app:destination="@id/FirstFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/SecondFragmentNonShared"
-        android:name="com.afzaln.materialcontainertransformdemo.SecondFragmentNonShared"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
-
-    <action
-        android:id="@+id/action_global_secondFragment"
-        app:destination="@+id/SecondFragmentNonShared" />
 </navigation>
