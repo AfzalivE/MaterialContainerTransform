@@ -2,10 +2,14 @@
     <string name="app_name">MaterialContainerTransform</string>
     <string name="action_reset">Reset</string>
     <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
     <string name="fade_progress_thresholds">Fade Progress Thresholds</string>
     <string name="scale_mask_progress_thresholds">Scale Mask Progress Thresholds</string>
     <string name="scale_progress_thresholds">Scale Progress Thresholds</string>
     <string name="shape_mask_progress_thresholds">Shape Mask Progress Thresholds</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="main_activity_fab">mainActivityFab</string>
+    <string name="second_transition_name">secondFragment</string>
 </resources>
