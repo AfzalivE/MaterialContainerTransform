@@ -1,18 +1,15 @@
 package com.afzaln.materialcontainertransform
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.getFloatOrThrow
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.afzaln.materialcontainertransform.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,29 +24,32 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.setTitle(R.string.app_name)
+        binding.toolbar.apply {
+            setTitle(R.string.app_name)
+            inflateMenu(R.menu.menu_main)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_reset -> {
+                        resetThresholds()
+                        true
+                    }
+                    else -> super.onOptionsItemSelected(item)
+                }
+            }
+        }
+
+        resetThresholds()
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
-
-        binding.fab.setOnClickListener { view ->
-            findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_reset -> true
-            else -> super.onOptionsItemSelected(item)
+    @SuppressLint("ResourceType")
+    private fun resetThresholds() {
+        resources.obtainTypedArray(R.array.initial_slider_values).use { initialValues ->
+            val start = initialValues.getFloatOrThrow(0)
+            val end = initialValues.getFloatOrThrow(1)
+            viewModel.updateAll(start, end)
         }
     }
 

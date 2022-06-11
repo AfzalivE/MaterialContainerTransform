@@ -6,7 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import com.afzaln.materialcontainertransform.databinding.FragmentFirstBinding
+import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialContainerTransform.ProgressThresholds
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -31,6 +36,7 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViewModel()
 
         binding.fadeThreshold.addOnChangeListener { slider, _, _ ->
             mainViewModel.updateFadeThresholds(slider.values[0], slider.values[1])
@@ -47,6 +53,27 @@ class FirstFragment : Fragment() {
         binding.shapeMaskThreshold.addOnChangeListener { slider, _, _ ->
             mainViewModel.updateShapeMaskThresholds(slider.values[0], slider.values[1])
         }
+
+        binding.fab.setOnClickListener {
+            findNavController()
+                .navigate(
+                    R.id.action_FirstFragment_to_SecondFragment,
+                    null,
+                    null,
+                    FragmentNavigatorExtras(
+                        binding.fab to getString(R.string.second_transition_name)
+                    )
+                )
+        }
+    }
+
+    private fun setupViewModel() {
+        mainViewModel.thresholdsState.observe(viewLifecycleOwner) {
+            binding.fadeThreshold.values = it.fadeProgressThresholds.values()
+            binding.scaleMaskThreshold.values = it.scaleMaskProgressThresholds.values()
+            binding.scaleThreshold.values = it.scaleProgressThresholds.values()
+            binding.shapeMaskThreshold.values = it.shapeMaskProgressThresholds.values()
+        }
     }
 
     override fun onDestroyView() {
@@ -54,3 +81,5 @@ class FirstFragment : Fragment() {
         _binding = null
     }
 }
+
+private fun ProgressThresholds.values() = listOf(start * 100, end * 100)
