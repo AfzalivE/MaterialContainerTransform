@@ -3,13 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionName="@string/second_transition_name"
     tools:context=".SecondFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <FrameLayout
+        android:id="@+id/second_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="320dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/rounded_background"
+        android:padding="16dp"
+        android:transitionName="@string/second_transition_name">
+
+        <!-- TODO: Update blank fragment layout -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/hello_blank_fragment" />
+
+    </FrameLayout>
 
 </FrameLayout>

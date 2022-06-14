@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.afzaln.materialcontainertransform.databinding.FragmentFirstBinding
 import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialContainerTransform.ProgressThresholds
+import com.google.android.material.transition.MaterialSharedAxis
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -55,6 +56,9 @@ class FirstFragment : Fragment() {
         }
 
         binding.fab.setOnClickListener {
+            exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
+            reenterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+
             findNavController()
                 .navigate(
                     R.id.action_FirstFragment_to_SecondFragment,
