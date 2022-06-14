@@ -1,6 +1,7 @@
 package com.afzaln.materialcontainertransform
 
 import android.annotation.SuppressLint
+import android.content.res.TypedArray
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -46,10 +47,32 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("ResourceType")
     private fun resetThresholds() {
-        resources.obtainTypedArray(R.array.initial_slider_values).use { initialValues ->
-            val start = initialValues.getFloatOrThrow(0)
-            val end = initialValues.getFloatOrThrow(1)
-            viewModel.updateAll(start, end)
+        resources.obtainTypedArray(R.array.first_slider_values).use { initialValues ->
+            viewModel.updateFadeThresholds(
+                initialValues.valuePair.first,
+                initialValues.valuePair.second
+            )
+        }
+
+        resources.obtainTypedArray(R.array.second_slider_values).use { initialValues ->
+            viewModel.updateScaleMaskThresholds(
+                initialValues.valuePair.first,
+                initialValues.valuePair.second
+            )
+        }
+
+        resources.obtainTypedArray(R.array.third_slider_values).use { initialValues ->
+            viewModel.updateScaleProgressThresholds(
+                initialValues.valuePair.first,
+                initialValues.valuePair.second
+            )
+        }
+
+        resources.obtainTypedArray(R.array.fourth_slider_values).use { initialValues ->
+            viewModel.updateShapeMaskThresholds(
+                initialValues.valuePair.first,
+                initialValues.valuePair.second
+            )
         }
     }
 
@@ -59,3 +82,6 @@ class MainActivity : AppCompatActivity() {
             || super.onSupportNavigateUp()
     }
 }
+
+private val TypedArray.valuePair
+    get() = Pair(getFloatOrThrow(0), getFloatOrThrow(1))

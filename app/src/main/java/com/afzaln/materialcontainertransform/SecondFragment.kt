@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.transition.Transition
 import androidx.transition.TransitionListenerAdapter
 import com.google.android.material.shape.ShapeAppearanceModel
+import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 
 class SecondFragment : Fragment() {
@@ -33,27 +34,30 @@ class SecondFragment : Fragment() {
             .build()
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
+            duration = 10000
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
             fadeProgressThresholds = thresholdsState.fadeProgressThresholds
             scaleMaskProgressThresholds = thresholdsState.scaleMaskProgressThresholds
             scaleProgressThresholds = thresholdsState.scaleProgressThresholds
             shapeMaskProgressThresholds = thresholdsState.shapeMaskProgressThresholds
             endShapeAppearanceModel = containerShape
+            startContainerColor = requireContext().resources.getColor(R.color.fab)
+            endContainerColor = requireContext().resources.getColor(R.color.fab)
+            containerColor = requireContext().resources.getColor(R.color.fab)
             scrimColor = requireContext().resources.getColor(R.color.background_dark_transparent)
-            endContainerColor = requireContext().resources.getColor(R.color.background_dark_transparent)
-            addListener(object: TransitionListenerAdapter() {
+            addListener(object : TransitionListenerAdapter() {
                 override fun onTransitionEnd(transition: Transition) {
                     super.onTransitionEnd(transition)
                     view.setBackgroundResource(R.color.background_dark_transparent)
                     requireActivity().findViewById<View>(R.id.appbar)
                         .setBackgroundResource(R.color.background_dark_transparent)
-
                 }
             })
         }
 
         sharedElementReturnTransition = MaterialContainerTransform().apply {
-            this.transitionDirection = MaterialContainerTransform.TRANSITION_DIRECTION_RETURN
+            duration = 5000
+            transitionDirection = MaterialContainerTransform.TRANSITION_DIRECTION_RETURN
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
             fadeProgressThresholds = thresholdsState.fadeProgressThresholds
             scaleMaskProgressThresholds = thresholdsState.scaleMaskProgressThresholds
@@ -61,13 +65,15 @@ class SecondFragment : Fragment() {
             shapeMaskProgressThresholds = thresholdsState.shapeMaskProgressThresholds
             scrimColor = requireContext().resources.getColor(R.color.background_dark_transparent)
             endContainerColor = requireContext().resources.getColor(R.color.fab)
-            addListener(object: TransitionListenerAdapter() {
+            addListener(object : TransitionListenerAdapter() {
                 override fun onTransitionStart(transition: Transition) {
                     super.onTransitionStart(transition)
-                    view.setBackgroundResource(R.color.white)
-                    requireActivity().findViewById<View>(R.id.appbar)
-                        .setBackgroundResource(R.color.white)
-
+                    view.setBackgroundColor(
+                        requireContext().themeColor(com.google.android.material.R.attr.colorSurface)
+                    )
+                    requireActivity().findViewById<View>(R.id.appbar).setBackgroundColor(
+                        requireContext().themeColor(com.google.android.material.R.attr.colorSurface)
+                    )
                 }
             })
         }

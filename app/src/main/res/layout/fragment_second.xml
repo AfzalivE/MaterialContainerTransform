@@ -14,11 +14,10 @@
         android:padding="16dp"
         android:transitionName="@string/second_transition_name">
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:text="@string/lorem_ipsum" />
 
     </FrameLayout>
 
