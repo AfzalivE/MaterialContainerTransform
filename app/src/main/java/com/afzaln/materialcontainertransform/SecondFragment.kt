@@ -34,7 +34,7 @@ class SecondFragment : Fragment() {
             .build()
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = 10000
+            duration = 2000
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
             fadeProgressThresholds = thresholdsState.fadeProgressThresholds
             scaleMaskProgressThresholds = thresholdsState.scaleMaskProgressThresholds
@@ -56,7 +56,7 @@ class SecondFragment : Fragment() {
         }
 
         sharedElementReturnTransition = MaterialContainerTransform().apply {
-            duration = 5000
+            duration = 2000
             transitionDirection = MaterialContainerTransform.TRANSITION_DIRECTION_RETURN
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
             fadeProgressThresholds = thresholdsState.fadeProgressThresholds
