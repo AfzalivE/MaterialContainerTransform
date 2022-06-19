@@ -86,4 +86,4 @@ class FirstFragment : Fragment() {
     }
 }
 
-private fun ProgressThresholds.values() = listOf(start * 100, end * 100)
+private fun ProgressThresholds.values() = listOf(start, end)

@@ -1,11 +1,8 @@
 package com.afzaln.materialcontainertransform
 
-import android.annotation.SuppressLint
-import android.content.res.TypedArray
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.getFloatOrThrow
 import androidx.core.view.WindowCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -31,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_reset -> {
-                        resetThresholds()
+                        viewModel.resetThresholds()
                         true
                     }
                     else -> super.onOptionsItemSelected(item)
@@ -39,41 +36,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        resetThresholds()
+        viewModel.resetThresholds()
 
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
-    }
-
-    @SuppressLint("ResourceType")
-    private fun resetThresholds() {
-        resources.obtainTypedArray(R.array.first_slider_values).use { initialValues ->
-            viewModel.updateFadeThresholds(
-                initialValues.valuePair.first,
-                initialValues.valuePair.second
-            )
-        }
-
-        resources.obtainTypedArray(R.array.second_slider_values).use { initialValues ->
-            viewModel.updateScaleMaskThresholds(
-                initialValues.valuePair.first,
-                initialValues.valuePair.second
-            )
-        }
-
-        resources.obtainTypedArray(R.array.third_slider_values).use { initialValues ->
-            viewModel.updateScaleProgressThresholds(
-                initialValues.valuePair.first,
-                initialValues.valuePair.second
-            )
-        }
-
-        resources.obtainTypedArray(R.array.fourth_slider_values).use { initialValues ->
-            viewModel.updateShapeMaskThresholds(
-                initialValues.valuePair.first,
-                initialValues.valuePair.second
-            )
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -82,6 +48,3 @@ class MainActivity : AppCompatActivity() {
             || super.onSupportNavigateUp()
     }
 }
-
-private val TypedArray.valuePair
-    get() = Pair(getFloatOrThrow(0), getFloatOrThrow(1))
