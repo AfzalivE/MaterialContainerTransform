@@ -13,7 +13,14 @@ class MainViewModel : ViewModel() {
         ProgressThresholds(0.75f, 1f)
     )
 
-    val thresholdsState = MutableLiveData(initialThresholdsState)
+    private val prototypeThresholdsState = ThresholdsState(
+        ProgressThresholds(0f, 0.20f),
+        ProgressThresholds(0.165f, 1f),
+        ProgressThresholds(0.165f, 1f),
+        ProgressThresholds(0.5f, 1f)
+    )
+
+    val thresholdsState = MutableLiveData(prototypeThresholdsState)
 
     fun updateFadeThresholds(start: Float, end: Float) {
         thresholdsState.value = thresholdsState.value?.copy(
@@ -52,7 +59,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun resetThresholds() {
-        thresholdsState.value = initialThresholdsState
+        thresholdsState.value = prototypeThresholdsState
     }
 }
 
