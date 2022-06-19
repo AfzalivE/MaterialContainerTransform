@@ -24,7 +24,8 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val thresholdsState = viewModel.thresholdsState.value!!
+        val enterThresholdsState = viewModel.thresholdsState.value!!
+        val returnThresholdsState = viewModel.prototypeReturnThresholdsState
 
         // Shape of the quick add container. In API 24, it's possible to obtain this from the
         // background drawable itself but minSdk is 23 right now.
@@ -37,10 +38,10 @@ class SecondFragment : Fragment() {
             duration = 3000
             interpolator = pathInterpolator
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
-            fadeProgressThresholds = thresholdsState.fadeProgressThresholds
-            scaleMaskProgressThresholds = thresholdsState.scaleMaskProgressThresholds
-            scaleProgressThresholds = thresholdsState.scaleProgressThresholds
-            shapeMaskProgressThresholds = thresholdsState.shapeMaskProgressThresholds
+            fadeProgressThresholds = enterThresholdsState.fadeProgressThresholds
+            scaleMaskProgressThresholds = enterThresholdsState.scaleMaskProgressThresholds
+            scaleProgressThresholds = enterThresholdsState.scaleProgressThresholds
+            shapeMaskProgressThresholds = enterThresholdsState.shapeMaskProgressThresholds
             endShapeAppearanceModel = containerShape
             startContainerColor = requireContext().resources.getColor(R.color.fab)
             endContainerColor = requireContext().resources.getColor(R.color.fab)
@@ -59,11 +60,13 @@ class SecondFragment : Fragment() {
         sharedElementReturnTransition = MaterialContainerTransform().apply {
             duration = 3000
             transitionDirection = MaterialContainerTransform.TRANSITION_DIRECTION_RETURN
+            interpolator = pathInterpolator
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
-            fadeProgressThresholds = thresholdsState.fadeProgressThresholds
-            scaleMaskProgressThresholds = thresholdsState.scaleMaskProgressThresholds
-            scaleProgressThresholds = thresholdsState.scaleProgressThresholds
-            shapeMaskProgressThresholds = thresholdsState.shapeMaskProgressThresholds
+            fadeProgressThresholds = returnThresholdsState.fadeProgressThresholds
+            scaleMaskProgressThresholds = returnThresholdsState.scaleMaskProgressThresholds
+            scaleProgressThresholds = returnThresholdsState.scaleProgressThresholds
+            shapeMaskProgressThresholds = returnThresholdsState.shapeMaskProgressThresholds
+            startShapeAppearanceModel = containerShape
             scrimColor = requireContext().resources.getColor(R.color.background_dark_transparent)
             endContainerColor = requireContext().resources.getColor(R.color.fab)
             addListener(object : TransitionListenerAdapter() {
@@ -80,5 +83,6 @@ class SecondFragment : Fragment() {
         }
     }
 
+    // The values here are taken from the Principle mockup for this transition.
     val pathInterpolator = PathInterpolator(0.25f, 0.1f, 0.25f, 1f)
 }

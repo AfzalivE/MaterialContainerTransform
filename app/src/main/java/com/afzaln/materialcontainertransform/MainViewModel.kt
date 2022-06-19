@@ -6,60 +6,55 @@ import com.google.android.material.transition.MaterialContainerTransform.Progres
 
 class MainViewModel : ViewModel() {
 
-    private val initialThresholdsState = ThresholdsState(
+    private val staggeredThresholdsState = ThresholdsState(
         ProgressThresholds(0f, 0.25f),
         ProgressThresholds(0.25f, 0.5f),
         ProgressThresholds(0.5f, 0.75f),
         ProgressThresholds(0.75f, 1f)
     )
 
-    private val prototypeThresholdsState = ThresholdsState(
+    private val prototypeEnterThresholdsState = ThresholdsState(
         ProgressThresholds(0f, 0.295f),
         ProgressThresholds(0.154f, 1f),
         ProgressThresholds(0.154f, 1f),
         ProgressThresholds(0.8f, 1f)
     )
 
-    val thresholdsState = MutableLiveData(prototypeThresholdsState)
+    val prototypeReturnThresholdsState = ThresholdsState(
+        ProgressThresholds(0.8f, 1f),
+        ProgressThresholds(0f, 0.835f),
+        ProgressThresholds(0f, 0.835f),
+        ProgressThresholds(0f, 0.5f)
+    )
+
+    val thresholdsState = MutableLiveData(prototypeEnterThresholdsState)
 
     fun updateFadeThresholds(start: Float, end: Float) {
         thresholdsState.value = thresholdsState.value?.copy(
-            fadeProgressThresholds = ProgressThresholds(
-                start,
-                end
-            )
+            fadeProgressThresholds = ProgressThresholds(start, end)
         )
     }
 
     fun updateScaleMaskThresholds(start: Float, end: Float) {
         thresholdsState.value = thresholdsState.value?.copy(
-            scaleMaskProgressThresholds = ProgressThresholds(
-                start,
-                end
-            )
+            scaleMaskProgressThresholds = ProgressThresholds(start, end)
         )
     }
 
     fun updateScaleProgressThresholds(start: Float, end: Float) {
         thresholdsState.value = thresholdsState.value?.copy(
-            scaleProgressThresholds = ProgressThresholds(
-                start,
-                end
-            )
+            scaleProgressThresholds = ProgressThresholds(start, end)
         )
     }
 
     fun updateShapeMaskThresholds(start: Float, end: Float) {
         thresholdsState.value = thresholdsState.value?.copy(
-            shapeMaskProgressThresholds = ProgressThresholds(
-                start,
-                end
-            )
+            shapeMaskProgressThresholds = ProgressThresholds(start, end)
         )
     }
 
     fun resetThresholds() {
-        thresholdsState.value = prototypeThresholdsState
+        thresholdsState.value = prototypeEnterThresholdsState
     }
 }
 
