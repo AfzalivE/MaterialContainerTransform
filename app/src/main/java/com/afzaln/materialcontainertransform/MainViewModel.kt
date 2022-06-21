@@ -14,10 +14,10 @@ class MainViewModel : ViewModel() {
     )
 
     private val prototypeThresholdsState = ThresholdsState(
-        ProgressThresholds(0f, 0.20f),
-        ProgressThresholds(0.165f, 1f),
-        ProgressThresholds(0.165f, 1f),
-        ProgressThresholds(0.5f, 1f)
+        ProgressThresholds(0f, 0.295f),
+        ProgressThresholds(0.154f, 1f),
+        ProgressThresholds(0.154f, 1f),
+        ProgressThresholds(0.8f, 1f)
     )
 
     val thresholdsState = MutableLiveData(prototypeThresholdsState)

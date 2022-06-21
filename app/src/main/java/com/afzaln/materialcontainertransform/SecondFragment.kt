@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.PathInterpolator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.transition.Transition
 import androidx.transition.TransitionListenerAdapter
 import com.google.android.material.shape.ShapeAppearanceModel
-import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 
 class SecondFragment : Fragment() {
@@ -34,7 +34,8 @@ class SecondFragment : Fragment() {
             .build()
 
         sharedElementEnterTransition = MaterialContainerTransform().apply {
-            duration = 2000
+            duration = 3000
+            interpolator = pathInterpolator
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
             fadeProgressThresholds = thresholdsState.fadeProgressThresholds
             scaleMaskProgressThresholds = thresholdsState.scaleMaskProgressThresholds
@@ -56,7 +57,7 @@ class SecondFragment : Fragment() {
         }
 
         sharedElementReturnTransition = MaterialContainerTransform().apply {
-            duration = 2000
+            duration = 3000
             transitionDirection = MaterialContainerTransform.TRANSITION_DIRECTION_RETURN
             fadeMode = MaterialContainerTransform.FADE_MODE_CROSS
             fadeProgressThresholds = thresholdsState.fadeProgressThresholds
@@ -78,4 +79,6 @@ class SecondFragment : Fragment() {
             })
         }
     }
+
+    val pathInterpolator = PathInterpolator(0.25f, 0.1f, 0.25f, 1f)
 }
